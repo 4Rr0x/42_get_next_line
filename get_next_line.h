@@ -23,5 +23,6 @@
 char	*ft_find_line(char *text);
 char	*ft_strchr(char *s, int c);
 int		ft_strlen(char *str);
+char	*ft_strjoin(char *s1, char *s2);
 
 #endif

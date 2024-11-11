@@ -39,7 +39,8 @@ char	*ft_read_file(int fd, char *text)
 char	*ft_find_line(char	*text)
 {
 	int		i;
-	char *line;
+	int		j;
+	char	*line;
 	if (!text)
 		return (NULL);
 	i = 0;
@@ -47,6 +48,17 @@ char	*ft_find_line(char	*text)
 	{
 		i++;
 	}
+	line = (char *)malloc(sizeof(char) * (i + 2));
+	if (!line)
+		return (NULL);
+	while (text[i] && j < i)
+	{
+		line[j] = text[j];
+		j++;
+	}
+	line[j++] = '\n';
+	line[j] = '\0';
+	return (line);
 }
 
 char	*get_next_line(int fd)
@@ -60,4 +72,5 @@ char	*get_next_line(int fd)
 	if (!text)
 		return (NULL);
 	line = ft_find_line(text);
+	text = ft_leftovers(text);
 }
