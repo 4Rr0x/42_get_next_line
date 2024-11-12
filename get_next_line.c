@@ -51,6 +51,7 @@ char	*ft_find_line(char	*text)
 	line = (char *)malloc(sizeof(char) * (i + 2));
 	if (!line)
 		return (NULL);
+	j = 0;
 	while (text[i] && j < i)
 	{
 		line[j] = text[j];
@@ -73,4 +74,5 @@ char	*get_next_line(int fd)
 		return (NULL);
 	line = ft_find_line(text);
 	text = ft_leftovers(text);
+	return (line);
 }
