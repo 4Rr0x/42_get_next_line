@@ -1,0 +1,66 @@
+./main.c: Error!
+Error: TOO_MANY_WS          (line:  14, col:   1):	Extra whitespaces for indent level
+Error: TOO_MANY_WS          (line:  15, col:   1):	Extra whitespaces for indent level
+Error: SPACE_BEFORE_FUNC    (line:  18, col:   4):	space before function name
+Error: TOO_FEW_TAB          (line:  20, col:   1):	Missing tabs for indent level
+Error: SPACE_REPLACE_TAB    (line:  20, col:   5):	Found space when expecting tab
+Error: SPACE_REPLACE_TAB    (line:  20, col:   9):	Found space when expecting tab
+Error: TOO_FEW_TAB          (line:  21, col:   1):	Missing tabs for indent level
+Error: SPACE_REPLACE_TAB    (line:  21, col:   5):	Found space when expecting tab
+Error: SPACE_REPLACE_TAB    (line:  21, col:   8):	Found space when expecting tab
+Error: MISALIGNED_VAR_DECL  (line:  21, col:   9):	Misaligned variable declaration
+Error: TOO_FEW_TAB          (line:  22, col:   1):	Missing tabs for indent level
+Error: SPACE_REPLACE_TAB    (line:  22, col:   5):	Found space when expecting tab
+Error: SPACE_REPLACE_TAB    (line:  22, col:   8):	Found space when expecting tab
+Error: MISALIGNED_VAR_DECL  (line:  22, col:   9):	Misaligned variable declaration
+Error: TOO_FEW_TAB          (line:  23, col:   1):	Missing tabs for indent level
+Error: SPACE_REPLACE_TAB    (line:  23, col:   5):	Found space when expecting tab
+Error: SPACE_REPLACE_TAB    (line:  23, col:   8):	Found space when expecting tab
+Error: MISALIGNED_VAR_DECL  (line:  23, col:   9):	Misaligned variable declaration
+Error: TOO_FEW_TAB          (line:  24, col:   1):	Missing tabs for indent level
+Error: SPACE_REPLACE_TAB    (line:  24, col:   5):	Found space when expecting tab
+Error: SPACE_REPLACE_TAB    (line:  24, col:   8):	Found space when expecting tab
+Error: MISALIGNED_VAR_DECL  (line:  24, col:   9):	Misaligned variable declaration
+Error: TOO_FEW_TAB          (line:  26, col:   1):	Missing tabs for indent level
+Error: SPACE_REPLACE_TAB    (line:  26, col:   5):	Found space when expecting tab
+Error: TOO_FEW_TAB          (line:  29, col:   1):	Missing tabs for indent level
+Error: SPACE_REPLACE_TAB    (line:  29, col:   9):	Found space when expecting tab
+Error: RETURN_PARENTHESIS   (line:  29, col:  16):	Return value must be in parenthesis
+Error: WRONG_SCOPE_COMMENT  (line:  31, col:   5):	Comment is invalid in this scope
+Error: TOO_FEW_TAB          (line:  32, col:   1):	Missing tabs for indent level
+Error: SPACE_REPLACE_TAB    (line:  32, col:   5):	Found space when expecting tab
+Error: FORBIDDEN_CS         (line:  33, col:   5):	Forbidden control structure
+Error: SPC_BEFORE_NL        (line:  33, col:  32):	Space before newline
+Error: ASSIGN_IN_CONTROL    (line:  35, col:  20):	Assignment in control structure
+Error: RETURN_PARENTHESIS   (line:  38, col:  20):	Return value must be in parenthesis
+Error: WRONG_SCOPE_COMMENT  (line:  41, col:   5):	Comment is invalid in this scope
+Error: TOO_FEW_TAB          (line:  42, col:   1):	Missing tabs for indent level
+Error: SPACE_REPLACE_TAB    (line:  42, col:   5):	Found space when expecting tab
+Error: TOO_FEW_TAB          (line:  45, col:   1):	Missing tabs for indent level
+Error: FORBIDDEN_CS         (line:  45, col:   5):	Forbidden control structure
+Error: SPACE_REPLACE_TAB    (line:  45, col:   5):	Found space when expecting tab
+Error: TOO_FEW_TAB          (line:  47, col:   1):	Missing tabs for indent level
+Error: SPACE_REPLACE_TAB    (line:  47, col:   9):	Found space when expecting tab
+Error: ASSIGN_IN_CONTROL    (line:  47, col:  22):	Assignment in control structure
+Error: TOO_FEW_TAB          (line:  49, col:   1):	Missing tabs for indent level
+Error: SPACE_REPLACE_TAB    (line:  49, col:  13):	Found space when expecting tab
+Error: TOO_FEW_TAB          (line:  50, col:   1):	Missing tabs for indent level
+Error: SPACE_REPLACE_TAB    (line:  50, col:  13):	Found space when expecting tab
+Error: TOO_FEW_TAB          (line:  51, col:   1):	Missing tabs for indent level
+Error: SPACE_REPLACE_TAB    (line:  51, col:  13):	Found space when expecting tab
+Error: TOO_FEW_TAB          (line:  52, col:   1):	Missing tabs for indent level
+Error: SPACE_REPLACE_TAB    (line:  52, col:  13):	Found space when expecting tab
+Error: TOO_FEW_TAB          (line:  53, col:   1):	Missing tabs for indent level
+Error: SPACE_REPLACE_TAB    (line:  53, col:  17):	Found space when expecting tab
+Error: WRONG_SCOPE_COMMENT  (line:  53, col:  24):	Comment is invalid in this scope
+Error: WRONG_SCOPE_COMMENT  (line:  53, col:  24):	Comment is invalid in this scope
+Error: TOO_FEW_TAB          (line:  54, col:   1):	Missing tabs for indent level
+Error: SPACE_EMPTY_LINE     (line:  54, col:   9):	Space on empty line
+Error: TOO_FEW_TAB          (line:  55, col:   1):	Missing tabs for indent level
+Error: SPACE_EMPTY_LINE     (line:  55, col:   5):	Space on empty line
+Error: WRONG_SCOPE_COMMENT  (line:  56, col:   5):	Comment is invalid in this scope
+Error: FORBIDDEN_CS         (line:  57, col:   5):	Forbidden control structure
+Error: TOO_FEW_TAB          (line:  59, col:   1):	Missing tabs for indent level
+Error: SPACE_REPLACE_TAB    (line:  59, col:   5):	Found space when expecting tab
+Error: RETURN_PARENTHESIS   (line:  59, col:  12):	Return value must be in parenthesis
+Error: TOO_MANY_LINES       (line:  60, col:   1):	Function has more than 25 lines
