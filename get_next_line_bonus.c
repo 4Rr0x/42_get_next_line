@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jopedro- <jopedro-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/11 10:26:50 by jopedro-          #+#    #+#             */
-/*   Updated: 2024/11/11 11:16:38 by jopedro-         ###   ########.fr       */
+/*   Created: 2024/12/02 11:47:05 by jopedro-          #+#    #+#             */
+/*   Updated: 2024/12/02 11:52:24 by jopedro-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_read_file(int fd, char *text)
 {
@@ -66,14 +66,14 @@ char	*ft_find_line(char	*text)
 char	*get_next_line(int fd)
 {
 	char		*line;
-	static char	*text;
+	static char	*text[4096];
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (0);
-	text = ft_read_file(fd, text);
-	if (!text)
+	text[fd] = ft_read_file(fd, text[fd]);
+	if (!text[fd])
 		return (NULL);
-	line = ft_find_line(text);
-	text = ft_leftovers(text);
+	line = ft_find_line(text[fd]);
+	text[fd] = ft_leftovers(text[fd]);
 	return (line);
 }

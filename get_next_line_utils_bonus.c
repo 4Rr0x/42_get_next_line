@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jopedro- <jopedro-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/11 10:49:06 by jopedro-          #+#    #+#             */
-/*   Updated: 2024/11/11 10:56:43 by jopedro-         ###   ########.fr       */
+/*   Created: 2024/12/02 11:51:00 by jopedro-          #+#    #+#             */
+/*   Updated: 2024/12/02 11:52:33 by jopedro-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_leftovers(char *text)
 {
