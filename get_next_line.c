@@ -21,14 +21,13 @@ char	*ft_read_file(int fd, char *text)
 	if (!buff)
 		return (NULL);
 	bytes_read = 1;
-	while (bytes_read != 0 && ft_strchr(text, '\n'))
+	while (bytes_read != 0 && !ft_strchr(text, '\n'))
 	{
 		bytes_read = read(fd, buff, BUFFER_SIZE);
 		if (bytes_read == -1)
-		{
-			free(buff);
-			return (NULL);
-		}
+			return (free(buff), NULL);
+		if (bytes_read == 0)
+			return (free(buff), free(text), NULL);
 		buff[bytes_read] = '\0';
 		text = ft_strjoin(text, buff);
 	}

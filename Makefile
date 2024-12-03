@@ -52,11 +52,11 @@ BUILD_PATH	= .build
 TEMP_PATH	= .temp
 TESTS_PATH	= files
 
-SRC		= $(get_next_line.c get_next_line_utils.c)
-SRCB	= $(get_next_line_bonus.c get_next_line_utils_bonus.c)
+SRC		= get_next_line.c get_next_line_utils.c
+SRCB	= get_next_line_bonus.c get_next_line_utils_bonus.c
 
 OBJS	= $(SRC:$(SRCB_PATH)/%.c=$(BUILD_PATH)/%.o)
-OBJSB	= $(SRCB:$(SRCB_PATH)/%.c=$(BUILD_PATH)/%.o)
+OBJSB	= $(SRCB:$(SRC_PATH)/%.c=$(BUILD_PATH)/%.o)
 
 LIBFT_PATH	= $(LIBS_PATH)/libft
 LIBFT_ARC	= $(LIBFT_PATH)/libft.a
@@ -91,16 +91,16 @@ MKDIR_P	= mkdir -p
 
 all: $(BUILD_PATH) deps $(EXEC)	## Compile Mandatory version
 
-$(EXEC): $(BUILD_PATH) $(OBJS) $(LIBFT_ARC) main.c			## Compile Mandatory version
+$(EXEC): $(BUILD_PATH) $(OBJS) main.c			## Compile Mandatory version
 	@echo "$(YEL)Compiling test for $(MAG)$(NAME)$(YEL) w/out bonus$(D)"
-	$(CC) $(CFLAGS) $(DFLAGS) $(BFLAGS)$(BUFFER_SIZE) main.c $(OBJS) $(LIBFT_ARC) -o $(EXEC)
+	$(CC) $(CFLAGS) $(DFLAGS) $(BFLAGS)$(BUFFER_SIZE) main.c $(OBJS) -o $(EXEC)
 	@echo "$(YEL)Linking $(CYA).gdbinit$(D) $(YEL)for debugging$(D)"
 	@echo "[$(_SUCCESS) compiling $(MAG)$(NAME)$(D) $(YEL)🖔$(D)]"
 	make norm
 
 bonus: $(BUILD_PATH) deps $(OBJSB) $(LIBFT_ARC) main.c		## Compile Bonus version
 	@echo "$(YEL)Compiling test for $(MAG)$(NAME) $(YEL)w/ bonus$(D)"
-	$(CC) $(CFLAGS) $(DFLAGS) main.c $(OBJSB) $(LIBFT_ARC) -o $(EXEC)
+	$(CC) $(CFLAGS) $(DFLAGS) main.c $(OBJSB) -o $(EXEC)
 	@echo "$(YEL)Linking $(CYA).gdbinit $(YEL)for debugging$(D)"
 	@echo "[$(_SUCCESS) compiling $(MAG)$(NAME)$(D) w/ bonus $(YEL)🖔$(D)]"
 	make norm
@@ -134,7 +134,7 @@ $(LIBFT_ARC):
 get_libft:
 	@echo "* $(CYA)Getting Libft submodule$(D)]"
 	@if test ! -d "$(LIBFT_PATH)"; then \
-		git clone git@github.com:PedroZappa/42_libft.git $(LIBFT_PATH); \
+		git clone git@github.com:4Rr0x/42_libft.git $(LIBFT_PATH); \
 		echo "* $(GRN)Libft submodule download$(D): $(_SUCCESS)"; \
 	else \
 		echo "* $(GRN)Libft submodule already exists 🖔"; \
