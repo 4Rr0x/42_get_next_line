@@ -6,7 +6,7 @@
 /*   By: jopedro- <jopedro-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 10:46:59 by jopedro-          #+#    #+#             */
-/*   Updated: 2024/11/11 10:59:24 by jopedro-         ###   ########.fr       */
+/*   Updated: 2024/12/03 10:45:40 by jopedro-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #  define BUFFER_SIZE 1000
 # endif
 
+char	*get_next_line(int fd);
 char	*ft_find_line(char *text);
 char	*ft_strchr(char *s, int c);
 int		ft_strlen(char *str);

@@ -6,7 +6,7 @@
 /*   By: jopedro- <jopedro-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 11:50:14 by jopedro-          #+#    #+#             */
-/*   Updated: 2024/12/02 11:52:12 by jopedro-         ###   ########.fr       */
+/*   Updated: 2024/12/03 10:45:53 by jopedro-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # endif
 
 char	*ft_find_line(char *text);
+char	*get_next_line(int fd);
 char	*ft_strchr(char *s, int c);
 int		ft_strlen(char *str);
 char	*ft_strjoin(char *s1, char *s2);
