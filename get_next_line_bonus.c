@@ -25,10 +25,9 @@ char	*ft_read_file(int fd, char *text)
 	{
 		bytes_read = read(fd, buff, BUFFER_SIZE);
 		if (bytes_read == -1)
-		{
-			free(buff);
-			return (NULL);
-		}
+			return (free(buff), NULL);
+		if (bytes_read == 0)
+			break;
 		buff[bytes_read] = '\0';
 		text = ft_strjoin(text, buff);
 	}
@@ -39,27 +38,25 @@ char	*ft_read_file(int fd, char *text)
 char	*ft_find_line(char	*text)
 {
 	int		i;
-	int		j;
 	char	*line;
 
 	if (!text)
 		return (NULL);
 	i = 0;
 	while (text[i] && text[i] != '\n')
-	{
 		i++;
-	}
 	line = (char *)malloc(sizeof(char) * (i + 2));
 	if (!line)
 		return (NULL);
-	j = 0;
-	while (text[i] && j < i)
+	i = 0;
+	while (text[i] && text[i] != '\n')
 	{
-		line[j] = text[j];
-		j++;
+		line[i] = text[i];
+		i++;
 	}
-	line[j++] = '\n';
-	line[j] = '\0';
+	if (text[i] == '\n')
+		line[i++] = '\n';
+	line[i] = '\0';
 	return (line);
 }
 

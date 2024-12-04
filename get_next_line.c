@@ -6,7 +6,7 @@
 /*   By: jopedro- <jopedro-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 10:26:50 by jopedro-          #+#    #+#             */
-/*   Updated: 2024/11/11 11:16:38 by jopedro-         ###   ########.fr       */
+/*   Updated: 2024/12/04 11:17:42 by jopedro-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*ft_read_file(int fd, char *text)
 		if (bytes_read == -1)
 			return (free(buff), NULL);
 		if (bytes_read == 0)
-			return (free(buff), free(text), NULL);
+			break;
 		buff[bytes_read] = '\0';
 		text = ft_strjoin(text, buff);
 	}
@@ -38,27 +38,25 @@ char	*ft_read_file(int fd, char *text)
 char	*ft_find_line(char	*text)
 {
 	int		i;
-	int		j;
 	char	*line;
 
 	if (!text)
 		return (NULL);
 	i = 0;
 	while (text[i] && text[i] != '\n')
-	{
 		i++;
-	}
 	line = (char *)malloc(sizeof(char) * (i + 2));
 	if (!line)
 		return (NULL);
-	j = 0;
-	while (text[i] && j < i)
+	i = 0;
+	while (text[i] && text[i] != '\n')
 	{
-		line[j] = text[j];
-		j++;
+		line[i] = text[i];
+		i++;
 	}
-	line[j++] = '\n';
-	line[j] = '\0';
+	if (text[i] == '\n')
+		line[i++] = '\n';
+	line[i] = '\0';
 	return (line);
 }
 
