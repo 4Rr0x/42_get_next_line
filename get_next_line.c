@@ -40,9 +40,9 @@ char	*ft_find_line(char	*text)
 	int		i;
 	char	*line;
 
-	if (!text)
-		return (NULL);
 	i = 0;
+	if (!text[i])
+		return (NULL);
 	while (text[i] && text[i] != '\n')
 		i++;
 	line = (char *)malloc(sizeof(char) * (i + 2));

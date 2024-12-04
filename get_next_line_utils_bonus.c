@@ -20,18 +20,15 @@ char	*ft_leftovers(char *text)
 
 	i = 0;
 	while (text[i] && text[i] != '\n')
-		i++;
+		++i;
 	if (!text[i])
-	{
-		free(text);
-		return (NULL);
-	}
+		return (free(text), NULL);
 	left = (char *)malloc(sizeof(char) * (ft_strlen(text) - i + 1));
 	if (!left)
-		return (NULL);
+		return (free(left), NULL);
 	i++;
 	j = 0;
-	while (text[i])
+	while (text[i] && text[i] != '\n')
 		left[j++] = text[i++];
 	left[j] = '\0';
 	free(text);

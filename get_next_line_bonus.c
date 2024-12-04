@@ -21,7 +21,7 @@ char	*ft_read_file(int fd, char *text)
 	if (!buff)
 		return (NULL);
 	bytes_read = 1;
-	while (bytes_read != 0 && ft_strchr(text, '\n'))
+	while (bytes_read != 0 && !ft_strchr(text, '\n'))
 	{
 		bytes_read = read(fd, buff, BUFFER_SIZE);
 		if (bytes_read == -1)
@@ -40,9 +40,9 @@ char	*ft_find_line(char	*text)
 	int		i;
 	char	*line;
 
-	if (!text)
-		return (NULL);
 	i = 0;
+	if (!text[i])
+		return (NULL);
 	while (text[i] && text[i] != '\n')
 		i++;
 	line = (char *)malloc(sizeof(char) * (i + 2));
@@ -67,6 +67,11 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (0);
+	if (!text[fd])
+	{
+		text[fd] = malloc(1);
+		text[fd][0] = '\0';
+	}
 	text[fd] = ft_read_file(fd, text[fd]);
 	if (!text[fd])
 		return (NULL);
