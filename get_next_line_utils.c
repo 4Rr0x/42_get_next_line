@@ -28,7 +28,7 @@ char	*ft_leftovers(char *text)
 		return (free(left), NULL);
 	i++;
 	j = 0;
-	while (text[i] && text[i] != '\n')
+	while (text[i])
 		left[j++] = text[i++];
 	left[j] = '\0';
 	free(text);

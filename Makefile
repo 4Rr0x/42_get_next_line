@@ -13,18 +13,6 @@
 MAKE	= make -C
 SHELL	:= bash
 
-# Default test values
-FILES		= $(shell ls -l $(TESTS_PATH) | awk '{print $$9}')
-ARG			?= "files/mini-vulf.txt"
-COUNTER		:= 1
-BUFFER_SIZE ?= 11
-SIZES		:= 1 42 666
-SIZES		+= 1600 3200 6400
-SIZES		+= 12800 25600 51200
-SIZES		+= 102400 204800 409600
-SIZES		+= 10000000
-# SIZES		+= -1
-
 #==============================================================================#
 #                                     NAMES                                    #
 #==============================================================================#
@@ -56,10 +44,7 @@ SRC		= get_next_line.c get_next_line_utils.c
 SRCB	= get_next_line_bonus.c get_next_line_utils_bonus.c
 
 OBJS	= $(SRC:$(SRCB_PATH)/%.c=$(BUILD_PATH)/%.o)
-OBJSB	= $(SRCB:$(SRC_PATH)/%.c=$(BUILD_PATH)/%.o)
-
-LIBFT_PATH	= $(LIBS_PATH)/libft
-LIBFT_ARC	= $(LIBFT_PATH)/libft.a
+OBJSB	= $(SRCB:$(SRCB_PATH)/%.c=$(BUILD_PATH)/%.o)
 
 GNLTESTER_PATH			= $(SRCB_PATH)/gnlTester
 GNL_STATION_TESTER_PATH	= $(SRCB_PATH)/gnlStationTester
@@ -89,7 +74,7 @@ MKDIR_P	= mkdir -p
 
 ##@ get_next_line Compilation Rules 🏗
 
-all: $(BUILD_PATH) deps $(EXEC)	## Compile Mandatory version
+all: $(BUILD_PATH)  $(EXEC)	## Compile Mandatory version
 
 $(EXEC): $(BUILD_PATH) $(OBJS) main.c			## Compile Mandatory version
 	@echo "$(YEL)Compiling test for $(MAG)$(NAME)$(YEL) w/out bonus$(D)"
@@ -98,17 +83,12 @@ $(EXEC): $(BUILD_PATH) $(OBJS) main.c			## Compile Mandatory version
 	@echo "[$(_SUCCESS) compiling $(MAG)$(NAME)$(D) $(YEL)🖔$(D)]"
 	make norm
 
-bonus: $(BUILD_PATH) deps $(OBJSB) $(LIBFT_ARC) main.c		## Compile Bonus version
+bonus: $(BUILD_PATH)  $(OBJSB) $(LIBFT_ARC) main.c		## Compile Bonus version
 	@echo "$(YEL)Compiling test for $(MAG)$(NAME) $(YEL)w/ bonus$(D)"
 	$(CC) $(CFLAGS) $(DFLAGS) main.c $(OBJSB) -o $(EXEC)
 	@echo "$(YEL)Linking $(CYA).gdbinit $(YEL)for debugging$(D)"
 	@echo "[$(_SUCCESS) compiling $(MAG)$(NAME)$(D) w/ bonus $(YEL)🖔$(D)]"
 	make norm
-
-deps:		## Download/Update libs
-	@if test ! -d "$(LIBFT_PATH)"; then make get_libft; \
-		else echo "$(YEL)[libft]$(D) folder found 🖔"; fi
-	@echo " $(RED)$(D) [$(GRN)Nothing to be done!$(D)]"
 
 -include $(BUILD_PATH)/%.d
 
@@ -127,19 +107,6 @@ $(BUILD_PATH):
 $(TEMP_PATH):
 	$(MKDIR_P) $(TEMP_PATH)
 	@echo "* $(YEL)Creating $(CYA)$(TEMP_PATH)$(YEL) folder:$(D) $(_SUCCESS)"
-
-$(LIBFT_ARC):
-	$(MAKE) $(LIBFT_PATH) extra
-
-get_libft:
-	@echo "* $(CYA)Getting Libft submodule$(D)]"
-	@if test ! -d "$(LIBFT_PATH)"; then \
-		git clone git@github.com:4Rr0x/42_libft.git $(LIBFT_PATH); \
-		echo "* $(GRN)Libft submodule download$(D): $(_SUCCESS)"; \
-	else \
-		echo "* $(GRN)Libft submodule already exists 🖔"; \
-	echo " $(RED)$(D) [$(GRN)Nothing to be done!$(D)]"; \
-	fi
 
 ##@ Norm Rules
 
@@ -174,106 +141,7 @@ check_ext_func: all		## Check for external functions
 
 ##@ Test Rules 🧪
 
-test: deps $(EXEC)		## Test w/ default BUFFER_SIZE
-	@TIMESTAMP=$(shell date +%Y%m%d%H%M%S); \
-	if [ -f $(TEMP_PATH)/out.txt ]; then \
-		mv -f $(TEMP_PATH)/out.txt $(TEMP_PATH)/out.$$TIMESTAMP.txt; \
-	fi
-	@for file in $(FILES); do \
-		echo "Test $(MAG)$$COUNTER$(D) : Executing $(CYA)$$file$(D)" | tee -a $(TEMP_PATH)/out.txt; \
-		valgrind --leak-check=full --show-leak-kinds=all --log-file=$(TEMP_PATH)/temp.txt ./$(EXEC) "$(TESTS_PATH)/$$file"; \
-		sed -n '10p' $(TEMP_PATH)/temp.txt >> $(TEMP_PATH)/out.txt; \
-		COUNTER=$$((COUNTER + 1)); \
-		echo $$COUNTER > $(TEMP_PATH)/passed_count.txt; \
-	done
-	@make --no-print-directory test_results
-
-test_stdin: deps $(EXEC) $(OBJS)	## Test w/ stdin
-	@echo "$(YEL)Compiling $(CYA)stdin test$(D) for $(MAG)$(NAME)$(D)"
-	$(CC) $(CFLAGS) $(BFLAGS)$(BUFFER_SIZE) $(DFLAGS) main_stdin.c $(OBJS) $(LIBFT_ARC) -o $(EXEC)
-	@echo "[$(_SUCCESS) compiling $(MAG)$(NAME)$(D) $(YEL)🖔$(D)]"
-	make --no-print-directory norm
-	valgrind --leak-check=full --show-leak-kinds=all ./$(EXEC)
-
-test_bonus: deps bonus $(TEMP_PATH) ## Test with multiple fds (bonus features)
-	@if [ -f $(TEMP_PATH)/in_files.txt ]; then \
-		$(RM) $(TEMP_PATH)/in_files.txt; \
-	fi
-	@echo "$(YEL)Creating file with all FILE paths...$(D)"
-	@for file in $(FILES); do \
-		printf "$(TESTS_PATH)/$$file" >> $(TEMP_PATH)/in_files.txt; \
-		printf " " >> $(TEMP_PATH)/in_files.txt; \
-	done
-	@echo "$(YEL)Executing with files from in_files.txt$(D)"
-	valgrind --leak-check=full --show-leak-kinds=all ./$(EXEC) $(shell cat "$(TEMP_PATH)/in_files.txt")
-	@echo "$(YEL)Executing with 2 files$(D)"
-	valgrind --leak-check=full --show-leak-kinds=all ./$(EXEC) "$(TESTS_PATH)/mini-vulf.txt" "$(TESTS_PATH)/read_error.txt"
-
-$(EXEC)_buffer: $(BUILD_PATH) $(OBJS) $(LIBFT_ARC) main.c
-	@echo "$(YEL)Compiling test for $(MAG)$(NAME)$(YEL) with BUFFER_SIZE=$(BUFFER_SIZE)$(D)"
-	$(CC) $(CFLAGS) $(DFLAGS) $(BFLAGS)$(BUFFER_SIZE) main.c $(OBJS) $(LIBFT_ARC) -o $(EXEC)
-	@echo "[$(_SUCCESS) compiling $(MAG)$(NAME)$(D) with BUFFER_SIZE=$(BUFFER_SIZE) $(YEL)🖔$(D)]"
-
-test_buffer: deps all $(TEMP_PATH)	## Test w/ different BUFFER_SIZEs
-	@TIMESTAMP=$(shell date +%Y%m%d%H%M%S); \
-	if [ -f $(TEMP_PATH)/out.txt ]; then \
-		mv -f $(TEMP_PATH)/out.txt $(TEMP_PATH)/out.$$TIMESTAMP.txt; \
-	fi
-	@for size in $(SIZES); do \
-		echo "$(YEL)$(_SEP)$(D)" | tee -a $(TEMP_PATH)/out.txt; \
-		echo "for $(GRN)BUFFER_SIZE$(D) of : $(RED)$$size$(D)" | tee -a $(TEMP_PATH)/out.txt; \
-		echo "$(YEL)$(_SEP)$(D)" | tee -a $(TEMP_PATH)/out.txt; \
-		if [ -f $(EXEC) ]; then \
-			$(RM) $(EXEC); \
-			$(RM) $(OBJS); \
-		fi; \
-		sleep 0.3s; \
-		make BUFFER_SIZE=$$size $(EXEC)_buffer; \
-		for file in $(FILES); do \
-			echo "$(YEL)$(_SEP)$(D)"; \
-			echo "Test $(MAG)$$COUNTER$(D)" | tee -a $(TEMP_PATH)/out.txt; \
-			echo "$(YEL)Current file: $(CYA)$$file$(D)" | tee -a $(TEMP_PATH)/out.txt; \
-			if [ $$size -lt 0 ]; then \
-				echo "read() with a BUFFER_SIZE smaller than 0 does not compile! Skipping Valgrind 🏇" | tee -a $(TEMP_PATH)/temp.txt; \
-			else \
-				valgrind --leak-check=full --show-leak-kinds=all --log-file=$(TEMP_PATH)/temp.txt ./$(EXEC) "$(TESTS_PATH)/$$file"; \
-				sed -n '10p' $(TEMP_PATH)/temp.txt >> $(TEMP_PATH)/out.txt; \
-			fi; \
-			COUNTER=$$((COUNTER + 1)); \
-			echo $$COUNTER > $(TEMP_PATH)/passed_count.txt; \
-		done; \
-	done
-	@make --no-print-directory test_results
-
-remove_ansi_noise:
-	@sed -i 's/\␏//g' $(TEMP_PATH)/out.txt
-
-test_results: $(TEMP_PATH)
-	make --no-print-directory remove_ansi_noise
-	@if command -v tmux; then \
-		if command -v lnav; then \
-			tmux split-window -h "lnav $(TEMP_PATH)/out.txt"; \
-		else \
-			tmux split-window -h "cat $(TEMP_PATH)/out.txt"; \
-		fi; \
-	else \
-		tmux split-window -h "cat $(TEMP_PATH)/out.txt | sed 's/\x1b\[[0-9;]*m//g'"; \
-	fi
-	@echo "$(YEL)$(_SEP)$(D)"
-	@echo "$(BCYA)Tests Summary$(D)"
-	@TOTAL=$(shell cat $(TEMP_PATH)/passed_count.txt)
-	@echo -ne "$(MAG)Total\t:  $(YEL)"
-	@awk '{print $$1}' $(TEMP_PATH)/passed_count.txt
-	@echo -ne "$(D)"
-	@cat $(TEMP_PATH)/out.txt | grep heap | awk '{ print $$5, $$7 }' > $(TEMP_PATH)/count.txt
-	@awk -v count=0 '{if ($$1 == $$2) count++} END \
-		{ print "$(GRN)Passed$(D)\t: ", count}' $(TEMP_PATH)/count.txt
-	@awk -v count=0 '{if ($$1 != $$2) \
-		{ print $$1 > "$(TEMP_PATH)/failing_test_number.txt"; count++ }} END \
-		{ print "$(RED)Failed$(D)\t: ", count}' $(TEMP_PATH)/count.txt
-	@echo "$(YEL)$(_SEP)$(D)"
-
-gnlTester: deps $(EXEC) get_gnlTester		## Run gnlTester
+gnlTester:  $(EXEC) get_gnlTester		## Run gnlTester
 	tmux split-window -h "$(MAKE) $(GNLTESTER_PATH) a"
 	tmux set-option remain-on-exit on
 
@@ -287,7 +155,7 @@ get_gnlTester:
 		echo " $(RED)$(D) [$(GRN)Nothing to be done!$(D)]"; \
 	fi
 
-gnl-station-tester: deps $(EXEC) get_gnlStationTester			## Run gnl-station-tester
+gnl-station-tester:  $(EXEC) get_gnlStationTester			## Run gnl-station-tester
 	tmux split-window -h "$(MAKE) $(GNL_STATION_TESTER_PATH)"
 	tmux set-option remain-on-exit on
 
@@ -303,7 +171,7 @@ get_gnlStationTester:
 
 ##@ Debug Rules 
 
-gdb: deps $(EXEC) $(TEMP_PATH)			## Debug w/ gdb
+gdb:  $(EXEC) $(TEMP_PATH)			## Debug w/ gdb
 	tmux split-window -h "gdb --tui --args ./$(EXEC) 'files/mini-vulf.txt'"
 	tmux resize-pane -L 5
 	@if command -v lnav; then \
@@ -312,38 +180,10 @@ gdb: deps $(EXEC) $(TEMP_PATH)			## Debug w/ gdb
 		tail -f gdb.txt; \
 	fi
 
-vgdb: deps $(EXEC) $(TEMP_PATH)			## Debug w/ valgrind & gdb
-	tmux split-window -h "valgrind --vgdb-error=0 --log-file=gdb.txt ./$(EXEC) $(ARG)"
-	make vgdb_pid
-	tmux split-window -v "gdb --tui -x $(TEMP_PATH)/gdb_commands.txt $(EXEC)"
-	tmux resize-pane -U 18
-	touch gdb.txt
-	@if command -v lnav; then \
-		lnav gdb.txt; \
-	else \
-		tail -f gdb.txt; \
-	fi
-
-vgdb_bonus: deps $(EXEC) $(TEMP_PATH)			## Debug bonus w/ valgrind & gdb
-	tmux split-window -h "valgrind --vgdb-error=0 --log-file=gdb.txt ./$(EXEC) '$(TESTS_PATH)/mini-vulf.txt' '$(TESTS_PATH)/read_error.txt'"
-	make vgdb_pid
-	tmux split-window -v "gdb --tui -x $(TEMP_PATH)/gdb_commands.txt $(EXEC)"
-	tmux resize-pane -U 18
-	touch gdb.txt
-	@if command -v lnav; then \
-		lnav gdb.txt; \
-	else \
-		tail -f gdb.txt; \
-	fi
-
-vgdb_pid: $(EXEC) $(TEMP_PATH)
-	printf "target remote | vgdb --pid=" > $(TEMP_PATH)/gdb_commands.txt
-	printf "$(shell pgrep -f valgrind)" >> $(TEMP_PATH)/gdb_commands.txt
-
 ##@ Clean-up Rules 󰃢
 
 clean: 				## Remove object files
-	@echo "*** $(YEL)Removing $(MAG)$(NAME)$(D) and deps $(YEL)object files$(D)"
+	@echo "*** $(YEL)Removing $(MAG)$(NAME)$(D) and  $(YEL)object files$(D)"
 	@if [ -d "$(BUILD_PATH)" ] || [ -d "$(TEMP_PATH)" ] || [ -d "$(GNLTESTER_PATH)" ]; then \
 		if [ -d "$(BUILD_PATH)" ]; then \
 			$(RM) $(BUILD_PATH); \
@@ -378,10 +218,6 @@ fclean: clean			## Remove executable and .gdbinit
 	else \
 		echo " $(RED)$(D) [$(GRN)Nothing to be fcleaned!$(D)]"; \
 	fi
-
-libclean: fclean	## Remove libs
-	$(RM) $(LIBS_PATH)
-	@echo "* $(YEL)Removing lib folder & files!$(D) : $(_SUCCESS)"
 
 re: fclean all	## Purge & Recompile
 

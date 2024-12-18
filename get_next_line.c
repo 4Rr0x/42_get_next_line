@@ -25,7 +25,7 @@ char	*ft_read_file(int fd, char *text)
 	{
 		bytes_read = read(fd, buff, BUFFER_SIZE);
 		if (bytes_read == -1)
-			return (free(buff), NULL);
+			return (free(buff), free(text), NULL);
 		if (bytes_read == 0)
 			break;
 		buff[bytes_read] = '\0';
